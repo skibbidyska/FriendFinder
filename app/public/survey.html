@@ -23,6 +23,10 @@
 <div id="content-container" class="container-fluid">
     <div id="row" class="bg row ">
         <div class="col-lg-8 offset-lg-2 jumbotron jumbotron-fluid">
+            <h1 id="friend-name" class="display-4"></h1>
+            <div id="friend-image" >
+
+            </div>
             <div id="info-container" class="container">
                 <h1 class="display-4">FriendFinder Survey</h1>
                 <p class="lead">Answer these questions and find out who you pair with best!</p>
@@ -123,7 +127,7 @@
                         </select>
                     </div>
                     <div class="col-12 mt-4">
-                        <button type="submit" id="submit" class="btn btn-primary btn-lg btn-block" >Submit Survey
+                        <button type="submit" id="submit" class="btn btn-primary btn-lg btn-block">Submit Survey
                         </button>
                     </div>
                 </form>
@@ -138,43 +142,48 @@
     Repo</a>
 </div>
 <script type="text/javascript">
-$(document).ready( function() {
-    $('#submit').on("click", function (event) {
-        event.preventDefault();
-        var newFriend = {
-            name: $('#name').val().trim(),
-            photo: $('#photo-url').val().trim(),
-            scores: [
-                $('#q1').val(),
-                $('#q2').val(),
-                $('#q3').val(),
-                $('#q4').val(),
-                $('#q5').val(),
-                $('#q6').val(),
-                $('#q7').val()
-            ]
-        }
+    $(document).ready(function () {
+        $('#submit').on("click", function (event) {
+            event.preventDefault();
+            var newFriend = {
+                name: $('#name').val().trim(),
+                photo: $('#photo-url').val().trim(),
+                scores: [
+                    $('#q1').val(),
+                    $('#q2').val(),
+                    $('#q3').val(),
+                    $('#q4').val(),
+                    $('#q5').val(),
+                    $('#q6').val(),
+                    $('#q7').val()
+                ]
+            };
 
 
+            var container = $('#info-container');
+            container.empty();
+            $('#row').removeAttr('class', 'bg');
+            $('#content-container').removeAttr('class', 'content-fluid');
+            $('#content-container').attr('class', 'bg text-center');
 
-        var container =  $('#info-container');
-        container.empty();
 
-
-
-
-
-        $.post('/api/friendslist', newFriend, function(data) {
-            container.append('<h1>Say Hello To Your New Friend!</h1>');
-            container.append('<h4>').attr('id', 'friend-name');
-            $('#friend-name').attr('class', 'display-4');
-            $('#friend-name').append( document.createTextNode(data.name));
+            $.ajax({
+                url: '/api/friendslist',
+                data: JSON.stringify(newFriend),
+                contentType: 'application/json',
+                method: 'POST'
+            })
+                .then(function (data) {
+                    console.log(data.photo);
+                    $('#friend-name').append(data.name);
+                    $('#friend-name').append('<br>');
+                    $('#friend-name').append('<img src=' + data.photo + 'height="150" width="360">');
+                });
 
         });
-    });
 
 
-})
+    })
 
 </script>
 </body>

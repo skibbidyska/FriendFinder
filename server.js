@@ -8,7 +8,6 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname + '/app/public/assets')));
 
 app.listen(PORT, function () {
