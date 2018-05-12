@@ -35,6 +35,8 @@ module.exports = function (app) {
         var newMatch = friendsArray[match];
         res.json(newMatch);
 
+        friendsArray.push(res.body);
+
     });
 };
 
