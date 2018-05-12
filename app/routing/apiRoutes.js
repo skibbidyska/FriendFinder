@@ -5,7 +5,9 @@ module.exports = function (app) {
        res.json(friendsArray);
     });
 
-    app.post("/api/friendslist", function (req, res) {
+    var url = window.location.origin;
+
+    app.post(url + "/api/friendslist", function (req, res) {
         console.log(req.body.scores)
 
         var newScores = req.body.scores;
