@@ -4,10 +4,9 @@ module.exports = function (app) {
     app.get("/api/friendslist", function (req, res) {
        res.json(friendsArray);
     });
+    
 
-    var url = window.location.origin;
-
-    app.post(url + "/api/friendslist", function (req, res) {
+    app.post("/api/friendslist", function (req, res) {
         console.log(req.body.scores)
 
         var newScores = req.body.scores;
