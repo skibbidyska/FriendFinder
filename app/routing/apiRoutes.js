@@ -4,7 +4,7 @@ module.exports = function (app) {
     app.get("/api/friendslist", function (req, res) {
        res.json(friendsArray);
     });
-    
+
 
     app.post("/api/friendslist", function (req, res) {
         console.log(req.body.scores)
@@ -34,7 +34,7 @@ module.exports = function (app) {
         var newMatch = friendsArray[match];
         res.json(newMatch);
 
-        friendsArray.push(res.body);
+        friendsArray.push(req.body);
 
     });
 };
